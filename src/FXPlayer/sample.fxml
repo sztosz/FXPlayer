@@ -4,45 +4,46 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="FXPlayer.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXPlayer.Controller">
     <children>
-        <Label fx:id="songTicker" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#changeSong" prefHeight="0.0"
-               prefWidth="416.0" text="Song" textAlignment="CENTER" textOverrun="CLIP">
+      <Label fx:id="artistTicker" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#changeSong" text="Artist" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="albumTicker" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#changeSong" text="Album" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+        <Label fx:id="songTicker" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#changeSong" text="Song" textAlignment="CENTER">
             <font>
-                <Font size="36.0"/>
+                <Font size="24.0" />
             </font>
         </Label>
-        <HBox prefHeight="100.0" prefWidth="200.0"/>
         <GridPane>
             <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#playClicked" text="PLAY" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
-                        GridPane.valignment="CENTER">
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#playClicked" text="PLAY" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
                     <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#pauseClicked" text="PAUSE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
-                        GridPane.valignment="CENTER">
+                <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#pauseClicked" text="PAUSE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
                     <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#stopClicked" text="STOP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
-                        GridPane.valignment="CENTER">
+                <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#stopClicked" text="STOP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
                     <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                     </font>
                 </Button>
             </children>

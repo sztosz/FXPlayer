@@ -1,5 +1,6 @@
 package FXPlayer;
 
+import javafx.collections.MapChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.media.Media;
@@ -16,11 +17,11 @@ public class Controller {
     private Media media;
     private MediaPlayer mediaPlayer;
 
-    @FXML
-    private Label songTicker;
+    @FXML private Label songTicker;
+    @FXML private Label artistTicker;
+    @FXML private Label albumTicker;
 
-    @FXML
-    void changeSong() {
+    public void changeSong() {
         try {
             File file = fileChooser.showOpenDialog(stage);
             if (file != null) {
@@ -39,25 +40,51 @@ public class Controller {
                 mediaPlayer.play();
                 this.mediaPlayer = mediaPlayer;
                 this.media = media;
+                changeMetadataOnLabels();
             }
         } catch (RuntimeException re) {
             songTicker.setText("Can't play this file");
         }
     }
 
+    public void changeMetadataOnLabels() {
+        media.getMetadata().addListener(new MapChangeListener<String, Object>() {
+            @Override
+            public void onChanged(Change<? extends String, ?> change) {
+                if (change.wasAdded()) {
+                    if (change.getKey().equals("title")) {
+                        songTicker.setText(change.getValueAdded().toString());
+                    }
+                    if (change.getKey().equals("artist")) {
+                        artistTicker.setText(change.getValueAdded().toString());
+                    }
+                    if (change.getKey().equals("album")) {
+                        albumTicker.setText(change.getValueAdded().toString());
+                    }
+                }
+            }
+        });
+    }
+
     public void playClicked() {
-        mediaPlayer.play();
-        songTicker.setText("PLAY");
+        if (this.mediaPlayer != null) {
+            mediaPlayer.play();
+            songTicker.setText("PLAY");
+        }
     }
 
     public void pauseClicked() {
-        mediaPlayer.pause();
-        songTicker.setText("PAUSE");
+        if (this.mediaPlayer != null) {
+            mediaPlayer.pause();
+            songTicker.setText("PAUSE");
+        }
     }
 
     public void stopClicked() {
-        mediaPlayer.stop();
-        songTicker.setText("STOP");
+        if (this.mediaPlayer != null) {
+            mediaPlayer.stop();
+            songTicker.setText("STOP");
+        }
     }
 
     public void setStage(Stage stage) {
