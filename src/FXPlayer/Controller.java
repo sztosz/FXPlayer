@@ -20,6 +20,7 @@ public class Controller {
     @FXML private Label songTicker;
     @FXML private Label artistTicker;
     @FXML private Label albumTicker;
+    @FXML private Label statusBar;
 
     public void changeSong() {
         try {
@@ -33,7 +34,7 @@ public class Controller {
                         songTicker.setText(media.getError().getMessage());
                     }
                 });
-                songTicker.setText("Now Playing"); // TO DO get song name
+                updateStatusBar("Now Playing");
                 if (this.mediaPlayer != null) {
                     this.mediaPlayer.stop();
                 }
@@ -43,7 +44,7 @@ public class Controller {
                 changeMetadataOnLabels();
             }
         } catch (RuntimeException re) {
-            songTicker.setText("Can't play this file");
+            updateStatusBar("Can't play this file");
         }
     }
 
@@ -66,24 +67,30 @@ public class Controller {
         });
     }
 
+
+    private void updateStatusBar(String text) {
+        statusBar.setText(text);
+    }
+
+
     public void playClicked() {
         if (this.mediaPlayer != null) {
             mediaPlayer.play();
-            songTicker.setText("PLAY");
+            updateStatusBar("Playback Started");
         }
     }
 
     public void pauseClicked() {
         if (this.mediaPlayer != null) {
             mediaPlayer.pause();
-            songTicker.setText("PAUSE");
+            updateStatusBar("Paused");
         }
     }
 
     public void stopClicked() {
         if (this.mediaPlayer != null) {
             mediaPlayer.stop();
-            songTicker.setText("STOP");
+            updateStatusBar("Stoped");
         }
     }
 
