@@ -8,8 +8,10 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 
 public class Controller {
 
@@ -17,11 +19,13 @@ public class Controller {
     private Stage stage;
     private Media media;
     private MediaPlayer mediaPlayer;
+    private Duration endTime;
 
     @FXML private Label songTicker;
     @FXML private Label artistTicker;
     @FXML private Label albumTicker;
     @FXML private Label statusBar;
+    @FXML private Label songEndTime;
     @FXML private Slider volumeSlider;
 
     public void changeSong() {
@@ -36,15 +40,22 @@ public class Controller {
                         songTicker.setText(media.getError().getMessage());
                     }
                 });
+                mediaPlayer.setOnReady(new Runnable() {
+                    @Override
+                    public void run() {
+                        mediaPlayer.play();
+                        mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
+                        endTime = mediaPlayer.getTotalDuration();
+                        songEndTime.setText(new SimpleDateFormat("mm:ss").format(endTime.toMillis())); // Possible Memory leak
+                    }
+                });
                 updateStatusBar("Now Playing");
                 if (this.mediaPlayer != null) {
                     this.mediaPlayer.stop();
-                    this.mediaPlayer = null; // Ensure object is properly collected by GC, we don't want memory leaks.
                 }
-                mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
-                mediaPlayer.play();
                 this.mediaPlayer = mediaPlayer;
                 this.media = media;
+
                 changeMetadataOnLabels();
             }
         } catch (RuntimeException re) {
@@ -80,7 +91,7 @@ public class Controller {
     public void playClicked() {
         if (this.mediaPlayer != null) {
             mediaPlayer.play();
-            updateStatusBar("Playback Started");
+            updateStatusBar("Playback Started"); // TODO: Check if was paused and say it was resumed.
         }
     }
 
@@ -94,7 +105,7 @@ public class Controller {
     public void stopClicked() {
         if (this.mediaPlayer != null) {
             mediaPlayer.stop();
-            updateStatusBar("Stoped");
+            updateStatusBar("Stopped");
         }
     }
 
