@@ -1,59 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXPlayer.Controller">
-    <children>
-      <Label fx:id="artistTicker" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#changeSong" text="Artist" textAlignment="CENTER">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label fx:id="albumTicker" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#changeSong" text="Album" textAlignment="CENTER">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-        <Label fx:id="songTicker" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#changeSong" text="Song" textAlignment="CENTER">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Label>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+<VBox prefHeight="600.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXPlayer.Controller">
+   <children>
+      <HBox prefHeight="111.0" prefWidth="330.0">
+         <children>
+            <Slider fx:id="volumeSlider" blockIncrement="0.05" max="1.0" maxHeight="100.0" maxWidth="30.0" minHeight="100.0" minWidth="30.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="30.0" value="1.0" />
+            <VBox minWidth="300.0">
+                <children>
+                  <Label fx:id="artistTicker" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#changeSong" text="Artist" textAlignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="albumTicker" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#changeSong" text="Album" textAlignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                    <Label fx:id="songTicker" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#changeSong" text="Song" textAlignment="CENTER">
+                        <font>
+                            <Font size="24.0" />
+                        </font>
+                    </Label>
+                </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER">
+         <children>
+            <Label fx:id="songCurrentTime" text="00:00" />
+            <Slider fx:id="songSeeker" prefWidth="250.0" showTickMarks="true">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Slider>
+            <Label fx:id="songEndTime" alignment="TOP_RIGHT" text="00:00" />
+         </children>
+      </HBox>
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#playClicked" text="PLAY" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Button>
+                <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#pauseClicked" text="PAUSE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Button>
+                <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#stopClicked" text="STOP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Button>
+            </children>
+        </GridPane>
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <bottom>
-            <Label fx:id="statusBar" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER" />
+            <Label fx:id="statusBar" BorderPane.alignment="CENTER" />
          </bottom>
-         <top>
-              <GridPane BorderPane.alignment="CENTER">
-                  <columnConstraints>
-                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                  </columnConstraints>
-                  <rowConstraints>
-                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  </rowConstraints>
-                  <children>
-                      <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#playClicked" text="PLAY" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
-                          <font>
-                              <Font size="24.0" />
-                          </font>
-                      </Button>
-                      <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#pauseClicked" text="PAUSE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
-                          <font>
-                              <Font size="24.0" />
-                          </font>
-                      </Button>
-                      <Button alignment="CENTER" mnemonicParsing="false" onMouseClicked="#stopClicked" text="STOP" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
-                          <font>
-                              <Font size="24.0" />
-                          </font>
-                      </Button>
-                  </children>
-              </GridPane>
-         </top>
+         <center>
+            <ListView fx:id="playlist" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
+            </ListView>
+         </center>
       </BorderPane>
-    </children>
+   </children>
 </VBox>

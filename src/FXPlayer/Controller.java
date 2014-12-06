@@ -3,6 +3,7 @@ package FXPlayer;
 import javafx.collections.MapChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
@@ -21,6 +22,7 @@ public class Controller {
     @FXML private Label artistTicker;
     @FXML private Label albumTicker;
     @FXML private Label statusBar;
+    @FXML private Slider volumeSlider;
 
     public void changeSong() {
         try {
@@ -37,7 +39,9 @@ public class Controller {
                 updateStatusBar("Now Playing");
                 if (this.mediaPlayer != null) {
                     this.mediaPlayer.stop();
+                    this.mediaPlayer = null; // Ensure object is properly collected by GC, we don't want memory leaks.
                 }
+                mediaPlayer.volumeProperty().bindBidirectional(volumeSlider.valueProperty());
                 mediaPlayer.play();
                 this.mediaPlayer = mediaPlayer;
                 this.media = media;
