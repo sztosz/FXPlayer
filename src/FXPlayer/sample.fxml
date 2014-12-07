@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -9,7 +10,7 @@
    <children>
       <HBox prefHeight="111.0" prefWidth="330.0">
          <children>
-            <Slider fx:id="volumeSlider" blockIncrement="0.05" max="1.0" maxHeight="100.0" maxWidth="30.0" minHeight="100.0" minWidth="30.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="30.0" value="1.0" />
+            <Slider fx:id="volumeSlider" blockIncrement="0.05" majorTickUnit="0.5" max="1.0" maxHeight="100.0" maxWidth="30.0" minHeight="100.0" minWidth="30.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="30.0" showTickMarks="true" value="1.0" />
             <VBox minWidth="300.0">
                 <children>
                   <Label fx:id="artistTicker" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#changeSong" text="Artist" textAlignment="CENTER">
@@ -34,7 +35,7 @@
       <HBox alignment="CENTER">
          <children>
             <Label fx:id="songCurrentTime" text="00:00" />
-            <Slider fx:id="songSeeker" prefWidth="250.0" showTickMarks="true">
+            <Slider fx:id="songSeeker" blockIncrement="0.05" majorTickUnit="0.2" max="1.0" minorTickCount="2" prefWidth="250.0" showTickMarks="true">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>

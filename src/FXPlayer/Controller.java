@@ -1,5 +1,10 @@
 package FXPlayer;
 
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.MapChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -20,13 +25,17 @@ public class Controller {
     private Media media;
     private MediaPlayer mediaPlayer;
     private Duration endTime;
+    private Duration currentTime;
 
     @FXML private Label songTicker;
     @FXML private Label artistTicker;
     @FXML private Label albumTicker;
     @FXML private Label statusBar;
     @FXML private Label songEndTime;
+    @FXML private Label songCurrentTime;
     @FXML private Slider volumeSlider;
+    @FXML private Slider songSeeker;
+
 
     public void changeSong() {
         try {
@@ -57,9 +66,45 @@ public class Controller {
                 this.media = media;
 
                 changeMetadataOnLabels();
+                songSeeker.valueChangingProperty().addListener(new songSeekerChangeListener());
+                mediaPlayer.currentTimeProperty().addListener(new CurrentTimeListener());
             }
         } catch (RuntimeException re) {
             updateStatusBar("Can't play this file");
+        }
+    }
+
+    public class CurrentTimeListener implements InvalidationListener {
+        @Override
+        public void invalidated(Observable observable) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    currentTime = mediaPlayer.getCurrentTime();
+                    songCurrentTime.setText(new SimpleDateFormat("mm:ss").format(currentTime.toMillis()));
+                    updateSongSeeker();
+                }
+            });
+
+        }
+    }
+
+    public class songSeekerChangeListener implements ChangeListener<Boolean> {
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldVal, Boolean newVal) {
+            if (oldVal && !newVal) {
+                mediaPlayer.seek(endTime.multiply(songSeeker.getValue()));
+            }
+        }
+
+
+    }
+
+    public void updateSongSeeker() {
+        if (currentTime == null || endTime == null) {
+            songSeeker.setValue(0);
+        } else {
+            songSeeker.setValue(currentTime.toMillis() / endTime.toMillis());
         }
     }
 
